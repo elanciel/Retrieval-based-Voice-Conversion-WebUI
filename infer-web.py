@@ -389,14 +389,14 @@ def get_pretrained_models(path_str, f0_str, sr2):
         "assets/pretrained%s/%sD%s.pth" % (path_str, f0_str, sr2), os.F_OK
     )
     if not if_pretrained_generator_exist:
-        logger.warning(
+        logger.warn(
             "assets/pretrained%s/%sG%s.pth not exist, will not use pretrained model",
             path_str,
             f0_str,
             sr2,
         )
     if not if_pretrained_discriminator_exist:
-        logger.warning(
+        logger.warn(
             "assets/pretrained%s/%sD%s.pth not exist, will not use pretrained model",
             path_str,
             f0_str,
@@ -800,10 +800,11 @@ with gr.Blocks(title="RVC WebUI") as app:
                         vc_transform0 = gr.Number(
                             label=i18n("变调(整数, 半音数量, 升八度12降八度-12)"), value=0
                         )
-                        input_audio0 = gr.Textbox(
-                            label=i18n("输入待处理音频文件路径(默认是正确格式示例)"),
-                            value="E:\\codes\\py39\\test-20230416b\\todo-songs\\冬之花clip1.wav",
-                        )
+                        # input_audio0 = gr.Textbox(
+                        #     label=i18n("输入待处理音频文件路径(默认是正确格式示例)"),
+                        #     value="opt",
+                        # )
+                        input_audio0 = gr.File(file_count="single", label=i18n("也可批量输入音频文件, 二选一, 优先读文件夹"))
                         f0method0 = gr.Radio(
                             label=i18n(
                                 "选择音高提取算法,输入歌声可用pm提速,harvest低音好但巨慢无比,crepe效果好但吃GPU,rmvpe效果最好且微吃GPU"
@@ -988,7 +989,7 @@ with gr.Blocks(title="RVC WebUI") as app:
                     with gr.Column():
                         dir_input = gr.Textbox(
                             label=i18n("输入待处理音频文件夹路径(去文件管理器地址栏拷就行了)"),
-                            value="E:\codes\py39\\test-20230416b\\todo-songs",
+                            value="opt",
                         )
                         inputs = gr.File(
                             file_count="multiple", label=i18n("也可批量输入音频文件, 二选一, 优先读文件夹")
@@ -1028,7 +1029,6 @@ with gr.Blocks(title="RVC WebUI") as app:
                 fn=vc.get_vc,
                 inputs=[sid0, protect0, protect1],
                 outputs=[spk_item, protect0, protect1, file_index2, file_index4],
-                api_name="infer_change_voice",
             )
         with gr.TabItem(i18n("伴奏人声分离&去混响&去回声")):
             with gr.Group():
@@ -1041,7 +1041,7 @@ with gr.Blocks(title="RVC WebUI") as app:
                     with gr.Column():
                         dir_wav_input = gr.Textbox(
                             label=i18n("输入待处理音频文件夹路径"),
-                            value="E:\\codes\\py39\\test-20230416b\\todo-songs\\todo-songs",
+                            value="opt",
                         )
                         wav_inputs = gr.File(
                             file_count="multiple", label=i18n("也可批量输入音频文件, 二选一, 优先读文件夹")
@@ -1128,7 +1128,7 @@ with gr.Blocks(title="RVC WebUI") as app:
                 )
                 with gr.Row():
                     trainset_dir4 = gr.Textbox(
-                        label=i18n("输入训练文件夹路径"), value="E:\\语音音频+标注\\米津玄师\\src"
+                        label=i18n("输入训练文件夹路径"), value=""
                     )
                     spk_id5 = gr.Slider(
                         minimum=0,
