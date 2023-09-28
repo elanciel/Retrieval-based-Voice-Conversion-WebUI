@@ -49,7 +49,7 @@ def audio2(i, o, format, sr):
 def load_audio(file, sr):
     try:
         file = (
-            file.strip(" ").strip('"').strip("\n").strip('"').strip(" ")
+            file.name.strip(" ").strip('"').strip("\n").strip('"').strip(" ")
         )  # 防止小白拷路径头尾带了空格和"和回车
         with open(file, "rb") as f:
             with BytesIO() as out:
